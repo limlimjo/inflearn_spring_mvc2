@@ -129,6 +129,20 @@ public class BasicController {
         return "basic/condition";
     }
 
+    // 주석
+    @GetMapping("/comments")
+    public String comments(Model model) {
+        model.addAttribute("data", "Spring!");
+        return "basic/comments";
+    }
+
+    // 블록 (일반적인 반복으로 사용하기 어려운 경우 사용)
+    @GetMapping("/block")
+    public String block(Model model) {
+        addUsers(model);
+        return "basic/block";
+    }
+
     private void addUsers(Model model) {
         List<User> list = new ArrayList<>();
         list.add(new User("userA", 10));
@@ -136,12 +150,5 @@ public class BasicController {
         list.add(new User("userC", 30));
 
         model.addAttribute("users", list);
-    }
-
-    // 주석
-    @GetMapping("/comments")
-    public String comments(Model model) {
-        model.addAttribute("data", "Spring!");
-        return "basic/comments";
     }
 }
