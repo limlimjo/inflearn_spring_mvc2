@@ -39,14 +39,6 @@ public class ValidationItemControllerV2 {
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
 
-        String s = "3people unFollowed me";
-        String[] strArr = s.split(" ");
-        for(int i=0; i<strArr.length; i++) {
-            String result = "";
-            result += strArr[i].substring(0, 1).toUpperCase() + strArr[i].substring(1);
-            System.out.println("출력: " + result);
-        }
-
         return "validation/v2/items";
     }
 
