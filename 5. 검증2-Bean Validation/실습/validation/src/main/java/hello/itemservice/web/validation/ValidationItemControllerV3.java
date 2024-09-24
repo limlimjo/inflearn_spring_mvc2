@@ -31,14 +31,6 @@ public class ValidationItemControllerV3 {
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
 
-        String s = "3people unFollowed me";
-        String[] strArr = s.split(" ");
-        for(int i=0; i<strArr.length; i++) {
-            String result = "";
-            result += strArr[i].substring(0, 1).toUpperCase() + strArr[i].substring(1);
-            System.out.println("출력: " + result);
-        }
-
         return "validation/v3/items";
     }
 
@@ -57,6 +49,14 @@ public class ValidationItemControllerV3 {
 
     @PostMapping("/add")
     public String addItem(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+
+        //특정 필드가 아닌 복합 룰 검증
+        if (item.getPrice() != null && item.getQuantity() != null) {
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if (resultPrice < 10000) {
+                bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+            }
+        }
 
         // 검증에 실패하면 다시 입력 폼으로
         if (bindingResult.hasErrors()) {
